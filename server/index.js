@@ -7,7 +7,11 @@ const {connectDB}=require('./config/connectDB');
 const cors = require('cors');
 
 const app=express();
-app.use(cors());
+app.use(cors({
+  origin: ['https://home-share.vercel.app'], 
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true // if you're using cookies or auth headers
+}));
 app.use(express.json())
 app.use('/uploads', express.static('uploads'));
 
