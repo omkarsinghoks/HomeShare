@@ -50,7 +50,7 @@ const ListHomePage = () => {
       const imageUrl = await uploadToCloudinary();
 
       await axios.post(
-        'http://localhost:8000/api/home-listing',
+        '${process.env.REACT_APP_BACKEND_URL}/api/home-listing',
         { ...form, imageUrl },
         {
           headers: {

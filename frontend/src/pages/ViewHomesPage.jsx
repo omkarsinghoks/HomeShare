@@ -20,7 +20,7 @@ const ViewHomesPage = () => {
   const fetchHomes = async (filters = {}) => {
     try {
       const params = new URLSearchParams(filters).toString();
-      const res = await axios.get(`http://localhost:8000/api/home-listing/search?${params}`, {
+      const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/home-listing/search?${params}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setHomes(res.data);

@@ -17,7 +17,7 @@ const RegisterPage = () => {
     e.preventDefault();
     setError('');
     try {
-      await axios.post('http://localhost:8000/api/users/register', formData);
+      await axios.post('${process.env.REACT_APP_BACKEND_URL}/api/users/register', formData);
       navigate('/login');
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');

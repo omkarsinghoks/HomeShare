@@ -20,7 +20,7 @@ const PaymentPage = () => {
   useEffect(() => {
     const fetchHome = async () => {
       try {
-        const res = await axios.get(`http://localhost:8000/api/home-listing`, {
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/home-listing`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const foundHome = res.data.find(h => h._id === homeId);
