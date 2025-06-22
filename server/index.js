@@ -33,9 +33,8 @@ connectDB();
 require('dotenv').config();
 // connectDB();
 app.use('/api/users', userRouter);
-app.use(authenticate);
-app.use('/api/home-listing', homeListingHandler);  
-app.use('/api/bookings', bookingRouter); // Assuming you have a bookingRouter set up
+app.use('/api/home-listing', authenticate, homeListingHandler);
+app.use('/api/bookings', authenticate, bookingRouter);
 
 app.listen(8000,()=>{
     console.log('Server is running on port 8000');
