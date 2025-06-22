@@ -7,10 +7,22 @@ const {connectDB}=require('./config/connectDB');
 const cors = require('cors');
 
 const app=express();
+const allowedOrigins = [
+  'http://localhost:3000', // For local development
+  'https://home-share-xfwn.vercel.app',
+  'https://home-share-xfwn-git-main-omkarsinghoks-projects.vercel.app',
+  'https://home-share-xfwn-46xwn6e3n-omkarsinghoks-projects.vercel.app'
+];
 app.use(cors({
-  origin: ['https://home-share.vercel.app'], 
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true // if you're using cookies or auth headers
+  credentials: true
 }));
 app.use(express.json())
 app.use('/uploads', express.static('uploads'));
