@@ -13,9 +13,9 @@ app.use(express.json()); // must come before routes
 
 const allowedOrigins = [
   'http://localhost:3000',
-  'https://home-share-delta.vercel.app/',
-  'https://home-share-git-main-omkarsinghoks-projects.vercel.app/',
-  'https://home-share-k5iow2wnq-omkarsinghoks-projects.vercel.app/'
+  'https://home-share-delta.vercel.app',
+  'https://home-share-git-main-omkarsinghoks-projects.vercel.app',
+  'https://home-share-k5iow2wnq-omkarsinghoks-projects.vercel.app'
 ];
 
 app.use(cors({
