@@ -1,18 +1,23 @@
-const express=require('express');
-const userRouter=require('./route/userRouter');
-const homeListingHandler=require('./route/homeListingRouter');
-const {authenticate}=require('./middleware/authenticate');
-const bookingRouter=require('./route/bookingRouter');
-const {connectDB}=require('./config/connectDB');
+require('dotenv').config();
+const express = require('express');
 const cors = require('cors');
+const app = express();
 
-const app=express();
+const userRouter = require('./route/userRouter');
+const homeListingRouter = require('./route/homeListingRouter');
+const bookingRouter = require('./route/bookingRouter');
+const { authenticate } = require('./middleware/authenticate');
+const { connectDB } = require('./config/connectDB');
+
+app.use(express.json()); // must come before routes
+
 const allowedOrigins = [
-  'http://localhost:3000', // For local development
-  'https://home-share-xfwn.vercel.app',
-  'https://home-share-xfwn-git-main-omkarsinghoks-projects.vercel.app',
-  'https://home-share-xfwn-46xwn6e3n-omkarsinghoks-projects.vercel.app'
+  'http://localhost:3000',
+  'https://home-share-delta.vercel.app/',
+  'https://home-share-git-main-omkarsinghoks-projects.vercel.app/',
+  'https://home-share-k5iow2wnq-omkarsinghoks-projects.vercel.app/'
 ];
+
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -24,26 +29,20 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
-app.use(express.json())
-app.use('/uploads', express.static('uploads'));
 
+app.use('/uploads', express.static('uploads'));
 
 connectDB();
 
-require('dotenv').config();
-// connectDB();
-app.use('/api/users', userRouter);
-app.use('/api/home-listing', authenticate, homeListingHandler);
-app.use('/api/bookings', authenticate, bookingRouter);
-
-app.listen(8000,()=>{
-    console.log('Server is running on port 8000');
+app.get('/api/ping', (req, res) => {
+  res.json({ message: 'CORS working' });
 });
 
+app.use('/api/users', userRouter);
+app.use('/api/home-listing', authenticate, homeListingRouter);
+app.use('/api/bookings', authenticate, bookingRouter);
 
-
-// mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-//   .then(() => console.log('MongoDB connected'))
-//   .catch(err => console.error('DB connection error:', err));
-
-// const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
