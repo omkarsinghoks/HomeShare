@@ -36,7 +36,7 @@ const BookingPage = () => {
     setSuccess('');
     try {
       const res = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/bookings`,  
+        `${process.env.REACT_APP_BACKEND_URL}api/bookings`,  
         { home: homeId, ...form },
         { headers: { Authorization: `Bearer ${token}` } }
       );

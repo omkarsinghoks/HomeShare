@@ -17,7 +17,7 @@ const ForgotPasswordPage = () => {
     setMessage('');
     setError('');
     try {
-      const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/users/forget-password`, { email, newPassword });
+      const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}api/users/forget-password`, { email, newPassword });
       console.log(res.data);
       setMessage(res.data.message);
       // Redirect to login after successful password reset
