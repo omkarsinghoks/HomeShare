@@ -16,6 +16,7 @@ const PaymentPage = () => {
   const [home, setHome] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  
 
   useEffect(() => {
     const fetchHome = async () => {

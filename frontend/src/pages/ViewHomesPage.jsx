@@ -8,6 +8,7 @@ import HomeCard from '../components/HomeCard';
 const ViewHomesPage = () => {
   const { token } = useAuth();
   const [homes, setHomes] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [search, setSearch] = useState({
     location: '',
@@ -18,6 +19,7 @@ const ViewHomesPage = () => {
   });
 
   const fetchHomes = async (filters = {}) => {
+     const [loading, setLoading] = useState(false);
     try {
       const params = new URLSearchParams(filters).toString();
       const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/home-listing/search?${params}`, {
@@ -27,6 +29,9 @@ const ViewHomesPage = () => {
       setError('');
     } catch (err) {
       setError('Failed to load homes');
+    }
+    finally {
+      setLoading(false);
     }
   };
 
@@ -42,10 +47,16 @@ const ViewHomesPage = () => {
     e.preventDefault();
     fetchHomes(search);
   };
+  
 
   return (
     <>
       <Navbar />
+       {loading && (
+    <div className="loading-overlay">
+      <div className="loader"></div>
+    </div>
+  )}
       <div className="min-h-screen bg-gray-100 p-6">
         <h2 className="text-2xl font-bold mb-4 text-center">Available Homes</h2>
 

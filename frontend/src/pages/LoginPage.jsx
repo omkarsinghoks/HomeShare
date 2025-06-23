@@ -11,10 +11,12 @@ const LoginPage = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
   const [error, setError] = useState('');
+   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async e => {
     e.preventDefault();
     setError('');
+     setLoading(true);
     try {
       const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}api/users/login`, {
         email,
@@ -25,11 +27,19 @@ const LoginPage = () => {
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
     }
+     finally {
+    setLoading(false);
+  }
   };
 
   return (
     <>
       <Navbar />
+       {loading && (
+    <div className="loading-overlay">
+      <div className="loader"></div>
+    </div>
+  )}
       <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
         <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
           <h2 className="text-2xl font-semibold mb-4 text-center">Login</h2>

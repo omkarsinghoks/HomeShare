@@ -8,6 +8,7 @@ const ResetPasswordPage = () => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
   
 
   const [error, setError] = useState('');
@@ -17,6 +18,7 @@ const ResetPasswordPage = () => {
     e.preventDefault();
     setMessage('');
     setError('');
+    setLoading(true);
     try {
       const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}api/users/reset-password`, {
         email,
@@ -28,11 +30,20 @@ const ResetPasswordPage = () => {
     } catch (err) {
       setError(err.response?.data?.message || 'Something went wrong');
     }
+    finally {
+      setLoading(false);
+    }
   };
 
   return (
     <>
       <Navbar />
+        
+  {loading && (
+    <div className="loading-overlay">
+      <div className="loader"></div>
+    </div>
+  )}
       <div className="min-h-screen bg-gray-100 flex justify-center items-center p-6">
         <form onSubmit={handleSubmit} className="bg-white shadow-xl rounded-xl p-6 w-full max-w-md">
           <h2 className="text-2xl font-semibold text-center mb-4">Reset Password</h2>
