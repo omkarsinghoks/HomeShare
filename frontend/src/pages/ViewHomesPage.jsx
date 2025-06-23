@@ -19,7 +19,7 @@ const ViewHomesPage = () => {
   });
 
   const fetchHomes = async (filters = {}) => {
-     const [loading, setLoading] = useState(false);
+     setLoading(true);
     try {
       const params = new URLSearchParams(filters).toString();
       const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/home-listing/search?${params}`, {
