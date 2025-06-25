@@ -31,6 +31,7 @@ const BookingPage = () => {
   };
 
   const handleSubmit = async e => {
+     
     e.preventDefault();
     setError('');
     setSuccess('');
@@ -40,6 +41,10 @@ const BookingPage = () => {
         { home: homeId, ...form },
         { headers: { Authorization: `Bearer ${token}` } }
       );
+      if (res.status !== 200) {
+        throw new Error('Booking failed');
+         
+      }
 
       setSuccess('Booking  slot successful! Redirecting to payment...');
       const days = calculateDays(form.startDate, form.endDate);
